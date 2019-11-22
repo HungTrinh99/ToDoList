@@ -5,8 +5,32 @@ const initialState = data ? data : [];
 
 var TaskListReducer = (state = initialState, action) => {
     switch (action.type) {
-        case types.DISPLAY_TASK_ALL:
-            return state;
+        //Filter
+        case types.FILTER_PROCESS:
+            {
+                state = JSON.parse(localStorage.getItem('Tasks'));
+                let typeProcess = action.payload;
+                let filterTasks = []; // Mảng lưu các task được filter tương ứng
+                if (typeProcess === -1) {
+                    filterTasks = state;
+                } else {
+                    for (let task of state) {
+                        if (parseInt(task.status, 10) === typeProcess) {
+                            filterTasks = [...filterTasks, task];
+                        }
+                    }
+                }
+                return [...filterTasks];
+            }
+        case types.FILTER_PRIORIRY:
+            {
+                break;
+            }
+        case types.FILTER_LABEL:
+            {
+                break;
+            }
+
         case types.ADD_NEW_TASK:
             {
                 var randomId = require('random-id');

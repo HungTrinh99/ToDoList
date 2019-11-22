@@ -5,3 +5,7 @@ export const UPDATE_TASK = 'UPDATE_TASK'
 export const DELETE_TASK = 'DELETE_TASK'
 export const ADD_TASK_STATUS = 'ADD_TASK_STATUS'
 export const TASK_EDIT = 'TASK_EDIT' // item được dispatch => display ở modal popup
+export const FILTER_TYPE = 'FILTER_TYPE'
+export const FILTER_PROCESS = 'FILTER_PROCESS'
+export const FILTER_PRIORIRY = 'FILTER_PROCESS'
+export const FILTER_LABEL = 'FILTER_PROCESS'

@@ -46,3 +46,11 @@ export const editTask = (task) => {
         payload: task
     }
 }
+
+// filter: {type,value}
+export const filterType = (filter) => {
+    return {
+        type: types.FILTER_TYPE,
+        payload: filter
+    }
+}
