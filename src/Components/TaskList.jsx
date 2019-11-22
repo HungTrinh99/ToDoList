@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TaskItem from './TaskItem/TaskItem';
-
+import * as action from '../Redux/Action/action'
 
 class TaskList extends Component {
+    chooseEditTask = (task) => {
+        this.props.dispatch(action.editTask(task));
+    }
+    deleteTask=(id)=>{
+        this.props.dispatch(action.deleteTask(id));
+    }
+    choseEditStatus=(item)=>{
+        this.props.dispatch(action.updateStatus(item));
+    }
     render() {
-        let elementItem = this.props.TaskList.map((item, index) => {
-            return (
-                <TaskItem
-                    key={index}
-                    item={item}
-                    index={index}
-                />
-            )
-        });
         return (
             <div className="col-md-9 px-0">
                 {/* Header */}
@@ -46,7 +46,20 @@ class TaskList extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {elementItem}
+                            {
+                                this.props.TaskList.map((item, index) => {
+                                    return (
+                                        <TaskItem
+                                            deleteTask={this.deleteTask}
+                                            chooseEditTask={this.chooseEditTask}
+                                            choseEditStatus={this.choseEditStatus}
+                                            key={index}
+                                            index={index}
+                                            item={item}
+                                        />
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -61,6 +74,6 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(TaskList)
+export default connect(mapStateToProps)(TaskList)
 
 

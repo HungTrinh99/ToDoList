@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import * as action from '../../Redux/Action/action'
 
-class TaskItem extends Component {
+export default class TaskItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,15 +57,15 @@ class TaskItem extends Component {
     }
     //Sửa task
     _handelEditing = () => {
-        this.props._onUpdateTask(this.props.item);
+        this.props.chooseEditTask(this.props.item);
     }
     //Sửa tình trạng status
     _handleStatus = () => {
-        this.props._onStatus(this.state);
+        this.props.choseEditStatus(this.state);
     }
     // Xóa task
     _handleDelete = () => {
-        this.props._onDeleteTask(this.props.item.id);
+        this.props.deleteTask(this.props.item.id);
     }
     //Lấy thuộc tình tình trạng công việc
     getStatusName = (status) => {
@@ -138,17 +136,3 @@ class TaskItem extends Component {
         )
     }
 }
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        _onStatus: (item) => {
-            dispatch(action.updateStatus(item));
-        },
-        _onDeleteTask: (id) => {
-            dispatch(action.deleteTask(id));
-        },
-        _onUpdateTask: (task) => {
-            dispatch(action.editTask(task));
-        }
-    }
-}
-export default connect(null, mapDispatchToProps)(TaskItem)
