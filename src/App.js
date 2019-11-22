@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Controller from './Components/Controller'
+import TaskList from './Components/TaskList'
+import './App.css'
+import Modalpopup from './Components/Modalpopup'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <div>
+        <h2 className="text-center my-2">TO DO LIST</h2>
+        <div className="container-fluid">
+          <div className="row">
+            <Controller />
+            <TaskList />
+            <Modalpopup />
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
-
-export default App;
