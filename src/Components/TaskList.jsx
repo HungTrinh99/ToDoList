@@ -1,19 +1,93 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TaskItem from './TaskItem/TaskItem';
+import * as types from '../Redux/Constant/type'
 import * as action from '../Redux/Action/action'
 
 class TaskList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            taskSearch: ''
+        }
+    }
+
+    //Search TASK
+    _handleOnchange = (event) => {
+        this.setState({
+            taskSearch: event.target.value
+        })
+    }
+    // Update task item
     chooseEditTask = (task) => {
         this.props.dispatch(action.editTask(task));
     }
-    deleteTask=(id)=>{
+
+    //Delete task item by ID
+    deleteTask = (id) => {
         this.props.dispatch(action.deleteTask(id));
     }
-    choseEditStatus=(item)=>{
+    //Update task status
+    choseEditStatus = (item) => {
         this.props.dispatch(action.updateStatus(item));
     }
+    //Get TaskList:
+    getTaskList = () => {
+        let listFinal = [];
+        let listCurrent = this.props.TaskList;
+        let { type, payload } = this.props.FilterType;
+        let value = payload + "";
+        if (this.state.taskSearch !== '') {
+            listFinal = listCurrent.filter((task) => {
+                return task.name.toLowerCase().indexOf(this.state.taskSearch.toLowerCase()) !== -1;
+            })
+            return listFinal;
+        }
+        else {
+            switch (type) {
+                case types.FILTER_PROCESS:
+                    {
+                        if (value === "-1")
+                            return listCurrent;
+                        else {
+                            for (let i = 0; i < listCurrent.length; i++) {
+                                if (listCurrent[i].status === value)
+                                    listFinal = [...listFinal, listCurrent[i]];
+                            }
+                        }
+
+                        return listFinal;
+                    }
+                case types.FILTER_PRIORIRY:
+                    {
+                        if (value === "-1")
+                            return listCurrent;
+                        else {
+                            for (let i = 0; i < listCurrent.length; i++) {
+                                if (listCurrent[i].priority === value)
+                                    listFinal = [...listFinal, listCurrent[i]];
+                            }
+                        }
+
+                        return listFinal;
+                    }
+                case types.FILTER_LABEL:
+                    {
+                        for (let i = 0; i < listCurrent.length; i++) {
+                            let temp = listCurrent[i].labelArr;
+                            for (let j = 0; j < temp.length; j++)
+                                if (temp[j].toLowerCase() === value.toLowerCase())
+                                    listFinal = [...listFinal, listCurrent[i]];
+                        }
+                        console.log(listFinal);
+                        return listFinal;
+                    }
+                default: return listCurrent;
+            }
+        }
+    }
     render() {
+        let TaskList = this.getTaskList();
         return (
             <div className="col-md-9 px-0">
                 {/* Header */}
@@ -26,7 +100,13 @@ class TaskList extends Component {
                         </div>
                         <div className="col-md-6">
                             <div className="form-group text-left my-0">
-                                <input type="text" className="form-control" placeholder="Tìm kiếm công việc" />
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Tìm kiếm công việc"
+                                    onChange={this._handleOnchange}
+                                    name="taskSearch"
+                                />
                             </div>
                         </div>
                     </div>
@@ -47,7 +127,7 @@ class TaskList extends Component {
                         </thead>
                         <tbody>
                             {
-                                this.props.TaskList.map((item, index) => {
+                                TaskList.map((item, index) => {
                                     return (
                                         <TaskItem
                                             deleteTask={this.deleteTask}
@@ -70,10 +150,11 @@ class TaskList extends Component {
 
 const mapStateToProps = state => {
     return {
-        TaskList: state.TaskList
+        TaskList: state.TaskList,
+        FilterType: state.filterType
     }
 }
 
-export default connect(mapStateToProps)(TaskList)
+export default connect(mapStateToProps, null)(TaskList)
 
 

@@ -48,9 +48,18 @@ export const editTask = (task) => {
 }
 
 // filter: {type,value}
-export const filterType = (filter) => {
+export const filterType = (type, value) => {
     return {
-        type: types.FILTER_TYPE,
-        payload: filter
+        type: type,
+        payload: value
+    }
+}
+
+//value:1 Sort A -> Z
+//value:0 sort Z-> A
+export const sortAlphabet = (value) => {
+    return {
+        type: types.SORT_ALPHABET,
+        payload: value
     }
 }

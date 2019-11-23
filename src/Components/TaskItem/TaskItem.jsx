@@ -31,11 +31,11 @@ export default class TaskItem extends Component {
         let temp = "";
         prior += "";
         switch (prior) {
-            case "1":
+            case "3":
                 return temp = "Cao";
             case "2":
                 return temp = "Trung bình";
-            case "3":
+            case "1":
                 return temp = "Thấp";
             default:
                 temp = "";

@@ -3,7 +3,7 @@ import AddNewtask from './Controllers/AddNewTask'
 import FilterProcess from './Controllers/FilterProcess'
 import FilterLabel from './Controllers/FilterLabel'
 import FilterPriority from './Controllers/FilterPriority'
-import Sort from './Controllers/Sort'
+import Sort from './Controllers/Sort'   
 
 export default class Controller extends Component {
     render() {

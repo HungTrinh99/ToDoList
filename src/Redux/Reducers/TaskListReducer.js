@@ -3,34 +3,36 @@ import * as types from '../Constant/type'
 let data = JSON.parse(localStorage.getItem('Tasks'));
 const initialState = data ? data : [];
 
+
 var TaskListReducer = (state = initialState, action) => {
     switch (action.type) {
-        //Filter
-        case types.FILTER_PROCESS:
+        case types.SORT_ALPHABET:
             {
-                state = JSON.parse(localStorage.getItem('Tasks'));
-                let typeProcess = action.payload;
-                let filterTasks = []; // Mảng lưu các task được filter tương ứng
-                if (typeProcess === -1) {
-                    filterTasks = state;
-                } else {
-                    for (let task of state) {
-                        if (parseInt(task.status, 10) === typeProcess) {
-                            filterTasks = [...filterTasks, task];
-                        }
+                //1 : A->Z
+                //0 : Z->A
+                let taskResult = [...state];
+                taskResult.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // bỏ qua hoa thường
+                    var nameB = b.name.toUpperCase(); // bỏ qua hoa thường
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+
+                    // name trùng nhau
+                    return 0;
+                });
+
+                if (action.payload === "0") {
+                    //Reverse array Task: 
+                    for (let i = 0; i < taskResult.length / 2; i++) {
+                        [taskResult[i], taskResult[taskResult.length - i - 1]] = [taskResult[taskResult.length - i - 1], taskResult[i]]
                     }
                 }
-                return [...filterTasks];
+                return [...taskResult];
             }
-        case types.FILTER_PRIORIRY:
-            {
-                break;
-            }
-        case types.FILTER_LABEL:
-            {
-                break;
-            }
-
         case types.ADD_NEW_TASK:
             {
                 var randomId = require('random-id');
@@ -68,7 +70,6 @@ var TaskListReducer = (state = initialState, action) => {
                 for (let property in taskListCopy[index]) {
                     taskListCopy[index][property] = newTask[property];
                 }
-                console.log(taskListCopy[index]);
                 localStorage.setItem("Tasks", JSON.stringify(taskListCopy));
                 state = taskListCopy;
                 return [...state];

@@ -12,7 +12,8 @@ class ModalPopup extends Component {
             labelArr: [],
             priority: '',
             memberIDArr: [],
-            description: ''
+            description: '',
+            status:''
         }
     }
     _handleOnChange = (event) => {
@@ -59,7 +60,8 @@ class ModalPopup extends Component {
                 labelArr: nextProps.editTask.labelArr,
                 priority: nextProps.editTask.priority,
                 memberIDArr: nextProps.editTask.memberIDArr,
-                description: nextProps.editTask.description
+                description: nextProps.editTask.description,
+                status:nextProps.editTask.status
             })
         }
     }
@@ -131,10 +133,10 @@ class ModalPopup extends Component {
                                     name="memberIDArr"
                                     value={this.state.memberIDArr}
                                     onChange={this._memberChanged}>
-                                    <label><Checkbox value="user_2" /> Trịnh Vũ Minh Hùng</label>
-                                    <label><Checkbox value="user_3" /> Lê Yên Thanh </label>
-                                    <label><Checkbox value="user_4" /> Trần Minh Triết</label>
-                                    <label><Checkbox value="user_5" /> Trần Đan Thư</label>
+                                    <label><Checkbox value="user_1" /> Trịnh Vũ Minh Hùng</label>
+                                    <label><Checkbox value="user_2" /> Lê Yên Thanh </label>
+                                    <label><Checkbox value="user_3" /> Trần Minh Triết</label>
+                                    <label><Checkbox value="user_4" /> Trần Đan Thư</label>
                                 </CheckboxGroup>
                                 <br />
                                 <label>Nhãn:</label>
